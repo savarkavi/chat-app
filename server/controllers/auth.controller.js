@@ -63,7 +63,6 @@ export const signin = async (req, res) => {
     }
 
     generateTokenAndSetCookie(user._id, res);
-
     res.status(200).json({
       id: user._id,
       fullname: user.fullname,
