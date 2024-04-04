@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -39,10 +39,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/auth/signup`,
-        formData
-      );
+      await axios.post(`api/auth/signup`, formData);
 
       toast.success("Account created. Please Sign In");
       navigate("/signin");
@@ -145,9 +142,9 @@ const Signup = () => {
           </form>
           <div className="flex gap-2 text-white">
             <p>Already have an account?</p>
-            <a href="/signin" className="underline">
+            <Link to="/signin" className="underline">
               Sign In
-            </a>
+            </Link>
           </div>
         </div>
       </div>
