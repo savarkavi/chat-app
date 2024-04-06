@@ -40,11 +40,11 @@ const Signup = () => {
 
     try {
       await axios.post(`api/auth/signup`, formData);
-
       toast.success("Account created. Please Sign In");
       navigate("/signin");
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.error);
     }
   };
 

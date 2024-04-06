@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -9,7 +10,15 @@ const Signin = () => {
     password: "",
   });
 
+  const { authUser, setAuthUser } = useAuthContext();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authUser) {
+      navigate("/");
+    }
+  }, [authUser, navigate]);
 
   const handleChangeFormData = (e) => {
     setFormData((prev) => ({
@@ -21,12 +30,14 @@ const Signin = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post(`api/auth/signin`, formData);
-      console.log(data);
+      const { data } = await axios.post(`api/auth/signin`, formData);
+      localStorage.setItem("currentUser", JSON.stringify(data));
+      setAuthUser(data);
+
       toast.success("You are successfully logged in");
-      navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.error);
     }
   };
 

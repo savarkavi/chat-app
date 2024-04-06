@@ -68,7 +68,6 @@ export const signin = async (req, res) => {
       fullname: user.fullname,
       username: user.username,
       profilePicture: user.profilePicture,
-      token: res.cookie,
     });
   } catch (error) {
     console.log(error.message);
