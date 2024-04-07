@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,7 +13,15 @@ const Signup = () => {
     gender: "",
   });
 
+  const { authUser, setAuthUser } = useAuthContext();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authUser) {
+      navigate("/");
+    }
+  }, [authUser, navigate]);
 
   const handleChangeFormData = (e) => {
     setFormData((prev) => ({
@@ -39,9 +48,11 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await axios.post(`api/auth/signup`, formData);
+      const { data } = await axios.post(`api/auth/signup`, formData);
+      localStorage.setItem("currentUser", JSON.stringify(data));
+      setAuthUser(data);
+
       toast.success("Account created. Please Sign In");
-      navigate("/signin");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.error);

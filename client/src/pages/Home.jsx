@@ -8,9 +8,7 @@ const Home = () => {
   return (
     <div
       className={`h-screen ${
-        dayMode
-          ? "bg-[url('./assets/day.png')]"
-          : "bg-[url('./assets/night.jpeg')]"
+        dayMode ? "bg-[url('./assets/w1.png')]" : "bg-[url('./assets/n1.jpeg')]"
       }  bg-cover bg-no-repeat flex justify-center items-center relative`}
     >
       <Navbar dayMode={dayMode} setDayMode={setDayMode} />
