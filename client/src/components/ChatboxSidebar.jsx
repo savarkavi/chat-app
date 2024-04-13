@@ -27,7 +27,6 @@ const ChatboxSidebar = ({
 
     const { data } = await axios.get(`/api/messages/${user._id}`);
     setConversation(data);
-    console.log(data);
   };
 
   return (
@@ -39,7 +38,7 @@ const ChatboxSidebar = ({
       <div className="flex flex-col gap-8">
         <input
           placeholder="search..."
-          className={`p-2 w-full border ${
+          className={`p-2 w-full border bg-white ${
             !dayMode && "bg-zinc-700 text-white"
           } outline-none rounded-xl`}
         />
@@ -66,11 +65,11 @@ const ChatboxSidebar = ({
                   className="w-12 h-12"
                 />
                 <h2
-                  className={`capitalize text-lg ${
+                  className={`capitalize ${
                     dayMode ? "text-black" : "text-white"
                   }`}
                 >
-                  {user.fullname}
+                  {user.username}
                 </h2>
               </div>
             );

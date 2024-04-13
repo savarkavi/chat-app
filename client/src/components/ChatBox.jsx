@@ -10,7 +10,7 @@ import ChatBoxMain from "./ChatBoxMain";
 
 const ChatBox = ({ dayMode }) => {
   const [users, setUsers] = useState([]);
-  const [conversation, setConversation] = useState([]);
+  const [conversation, setConversation] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
   const { authUser, setAuthUser } = useAuthContext();
 
@@ -25,11 +25,9 @@ const ChatBox = ({ dayMode }) => {
     fetchSidebarUsers();
   }, []);
 
-  useEffect(() => {
-    if (!authUser) {
-      navigate("/signin");
-    }
-  }, [authUser, navigate]);
+  if (!authUser) {
+    return navigate("/signin");
+  }
 
   return (
     <div

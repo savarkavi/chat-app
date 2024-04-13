@@ -36,13 +36,15 @@ export const getMessages = async (req, res) => {
 
     const conversation = await Conversation.findOne({
       participants: { $all: [sender, reciever] },
-    }).populate({ path: "messages" });
+    })
+      .populate({ path: "messages" })
+      .populate({ path: "participants" });
 
     if (!conversation) {
-      return res.status(200).json([]);
+      return res.status(200).json(null);
     }
 
-    res.status(200).json(conversation.messages);
+    res.status(200).json(conversation);
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Something went wrong" });
