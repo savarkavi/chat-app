@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "daisyui": "^4.10.1"
-  },
-  "dependencies": {
-    "date-fns": "^3.6.0"
-  }
-}
