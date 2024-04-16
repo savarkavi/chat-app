@@ -1,6 +1,7 @@
 import { CiLogout } from "react-icons/ci";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useSocketContext } from "../../context/SocketContext";
 
 const ChatboxSidebar = ({
   users,
@@ -10,6 +11,8 @@ const ChatboxSidebar = ({
   selectedChat,
   setSelectedChat,
 }) => {
+  const { onlineUsers } = useSocketContext();
+
   const handleLogout = async () => {
     try {
       await axios.post("/api/auth/signout");
@@ -45,6 +48,8 @@ const ChatboxSidebar = ({
 
         <div className="flex flex-col gap-2">
           {users.map((user) => {
+            let isOnline = onlineUsers.includes(user._id);
+
             return (
               <div
                 key={user._id}
@@ -59,11 +64,16 @@ const ChatboxSidebar = ({
                 } p-3 cursor-pointer hover:rounded-lg  transition-all`}
                 onClick={() => handleGetConversation(user)}
               >
-                <img
-                  src={user.profilePicture}
-                  alt="profile pic"
-                  className="w-12 h-12"
-                />
+                <div className="relative">
+                  <img
+                    src={user.profilePicture}
+                    alt="profile pic"
+                    className="w-12 h-12"
+                  />
+                  {isOnline && (
+                    <div className="w-3 h-3 rounded-full bg-green-500 absolute top-0 right-0 border border-black"></div>
+                  )}
+                </div>
                 <h2
                   className={`capitalize ${
                     dayMode ? "text-black" : "text-white"

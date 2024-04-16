@@ -66,7 +66,7 @@ const Signin = () => {
                 value={formData.username}
                 onChange={handleChangeFormData}
                 name="username"
-                className="border p-2 outline-none w-full rounded-lg mt-2"
+                className="border p-2 outline-none w-full rounded-lg mt-2 text-white"
               />
             </div>
             <div>
@@ -79,7 +79,7 @@ const Signin = () => {
                 value={formData.password}
                 onChange={handleChangeFormData}
                 name="password"
-                className="border p-2 outline-none w-full rounded-lg mt-2"
+                className="border p-2 outline-none w-full rounded-lg mt-2 text-white"
               />
             </div>
             <button className="bg-black px-2 py-3 rounded-lg text-white">

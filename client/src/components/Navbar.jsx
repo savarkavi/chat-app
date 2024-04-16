@@ -79,7 +79,7 @@ const Navbar = ({ dayMode, setDayMode }) => {
                 id="name"
                 value={newFullname}
                 onChange={(e) => setNewFullname(e.target.value)}
-                className="border border-black rounded-lg p-2"
+                className="border border-black bg-white rounded-lg p-2"
               />
             </div>
             <div className="flex items-center gap-4">
@@ -90,7 +90,7 @@ const Navbar = ({ dayMode, setDayMode }) => {
                 id="username"
                 value={newUsername}
                 onChange={(e) => setNewUsername(e.target.value)}
-                className="border border-black rounded-lg p-2"
+                className="border border-black bg-white rounded-lg p-2"
               />
             </div>
             <button
