@@ -13,20 +13,20 @@ const io = new Server(server, {
   },
 });
 
-const userSocketMap = [];
+export const userSocketMap = {};
 
 io.on("connection", (socket) => {
   console.log("User connected", socket.id);
 
   const userId = socket.handshake.query.userId;
-  userSocketMap.push(userId);
+  userSocketMap[userId] = socket.id;
 
-  io.emit("getOnlineUsers", userSocketMap);
+  io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
-    const newUserSocketMap = userSocketMap.filter((id) => id !== userId);
-    io.emit("getOnlineUsers", newUserSocketMap);
+    delete userSocketMap[userId];
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 });
 

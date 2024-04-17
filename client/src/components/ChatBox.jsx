@@ -7,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import ChatboxSidebar from "./ChatboxSidebar";
 import ChatBoxMain from "./ChatBoxMain";
+import { useSocketContext } from "../../context/SocketContext";
 
 const ChatBox = ({ dayMode }) => {
   const [users, setUsers] = useState([]);
   const [conversation, setConversation] = useState(null);
   const [selectedChat, setSelectedChat] = useState(null);
   const { authUser, setAuthUser } = useAuthContext();
+  const { socket } = useSocketContext();
 
   const navigate = useNavigate();
 
@@ -24,6 +26,15 @@ const ChatBox = ({ dayMode }) => {
 
     fetchSidebarUsers();
   }, []);
+
+  useEffect(() => {
+    socket?.on("newMessage", (message) => {
+      setConversation((prev) => ({
+        ...prev,
+        messages: [...prev.messages, message],
+      }));
+    });
+  }, [socket]);
 
   if (!authUser) {
     return navigate("/signin");

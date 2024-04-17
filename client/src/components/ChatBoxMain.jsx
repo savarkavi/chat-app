@@ -2,7 +2,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 
 const ChatBoxMain = ({
@@ -13,6 +13,13 @@ const ChatBoxMain = ({
 }) => {
   const [message, setMessage] = useState("");
   const { authUser } = useAuthContext();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [conversation]);
 
   const handleSubmitMessage = async (e, msg) => {
     e.preventDefault();
@@ -46,7 +53,7 @@ const ChatBoxMain = ({
           >
             <h2 className="font-semibold">{selectedChat.username}</h2>
           </div>
-          <div className="w-full h-full overflow-y-scroll py-4">
+          <div className="w-full h-full overflow-y-scroll py-4" ref={scrollRef}>
             <div
               className={`w-full ${
                 !conversation && "h-full"
